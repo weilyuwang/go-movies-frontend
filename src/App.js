@@ -3,6 +3,7 @@ import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 // HashRouter vs BrowserRouter:
 // https://stackoverflow.com/questions/51974369/what-is-the-difference-between-hashrouter-and-browserrouter-in-react
 import Movies from "./components/Movies";
+import Movie from "./components/Movie";
 import Home from "./components/Home";
 import Admin from "./components/Admin";
 
@@ -34,6 +35,9 @@ const App = () => {
 
           <div className="col-md-10">
             <Switch>
+              <Route path="/movies/:id">
+                <Movie />
+              </Route>
               <Route path="/movies">
                 <Movies />
               </Route>
