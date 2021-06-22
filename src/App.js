@@ -2,6 +2,9 @@ import React from "react";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 // HashRouter vs BrowserRouter:
 // https://stackoverflow.com/questions/51974369/what-is-the-difference-between-hashrouter-and-browserrouter-in-react
+import Movies from "./components/Movies";
+import Home from "./components/Home";
+import Admin from "./components/Admin";
 
 const App = () => {
   return (
@@ -46,16 +49,6 @@ const App = () => {
       </div>
     </Router>
   );
-};
-
-const Movies = () => {
-  return <h2>Movies</h2>;
-};
-const Admin = () => {
-  return <h2>Admin</h2>;
-};
-const Home = () => {
-  return <h2>Home</h2>;
 };
 
 export default App;
