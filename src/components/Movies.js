@@ -4,34 +4,47 @@ import { Link } from "react-router-dom";
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState(null);
 
-  const loadMovies = () => {
-    fetch("http://localhost:4000/v1/movies")
-      .then((response) => response.json())
-      .then((json) => {
-        setMovies(json.movies);
-        setIsLoaded(true);
-      });
+  const loadMovies = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/v1/movies");
+      if (response.status !== 200) {
+        throw Error("Invalid response code: " + response.status);
+      }
+      const data = await response.json();
+      setMovies(data.movies);
+      setIsLoaded(true);
+    } catch (err) {
+      setError(err);
+      setIsLoaded(true);
+    }
   };
 
   useEffect(() => {
     loadMovies();
   }, []);
 
-  return isLoaded ? (
-    <>
-      <h2>Choose a movie</h2>
-      <ul>
-        {movies.map((m) => (
-          <li key={m.id}>
-            <Link to={`/movies/${m.id}`}>{m.title}</Link>
-          </li>
-        ))}
-      </ul>
-    </>
-  ) : (
-    <p>Loading...</p>
-  );
+  if (isLoaded) {
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    } else {
+      return (
+        <>
+          <h2>Choose a movie</h2>
+          <ul>
+            {movies.map((m) => (
+              <li key={m.id}>
+                <Link to={`/movies/${m.id}`}>{m.title}</Link>
+              </li>
+            ))}
+          </ul>
+        </>
+      );
+    }
+  } else {
+    return <p>Loading...</p>;
+  }
 };
 
 export default Movies;

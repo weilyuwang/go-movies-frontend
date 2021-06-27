@@ -2,7 +2,7 @@ import React from "react";
 import { useRouteMatch, Link } from "react-router-dom";
 
 const CategoryPage = () => {
-  const { path, url } = useRouteMatch();
+  const { path } = useRouteMatch();
 
   return (
     <div>
