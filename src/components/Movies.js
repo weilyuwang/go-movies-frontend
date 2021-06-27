@@ -43,7 +43,7 @@ const Movies = () => {
       );
     }
   } else {
-    return <p>Loading...</p>;
+    return <div>Loading...</div>;
   }
 };
 
