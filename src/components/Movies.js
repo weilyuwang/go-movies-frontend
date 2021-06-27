@@ -3,16 +3,22 @@ import { Link } from "react-router-dom";
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const loadMovies = () => {
+    fetch("http://localhost:4000/v1/movies")
+      .then((response) => response.json())
+      .then((json) => {
+        setMovies(json.movies);
+        setIsLoaded(true);
+      });
+  };
 
   useEffect(() => {
-    setMovies([
-      { id: 1, title: "The Shawshank Redemption", runtime: 142 },
-      { id: 2, title: "The Godfather", runtime: 175 },
-      { id: 3, title: "The Dark Knight", runtime: 153 },
-    ]);
+    loadMovies();
   }, []);
 
-  return (
+  return isLoaded ? (
     <>
       <h2>Choose a movie</h2>
       <ul>
@@ -23,6 +29,8 @@ const Movies = () => {
         ))}
       </ul>
     </>
+  ) : (
+    <p>Loading...</p>
   );
 };
 
