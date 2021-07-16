@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 
 const OneGenre = () => {
   const { id } = useParams();
-
+  const { genreName } = useLocation();
   const [movies, setMovies] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
@@ -33,7 +33,7 @@ const OneGenre = () => {
     } else {
       return (
         <>
-          <h2>Genre: </h2>
+          <h2>Genre: {genreName}</h2>
           <div className="list-group">
             {movies.map((m) => (
               <Link
