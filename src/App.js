@@ -6,6 +6,7 @@ import Movies from "./components/Movies";
 import Movie from "./components/Movie";
 import Home from "./components/Home";
 import Genres from "./components/Genres";
+import OneGenre from "./components/OneGenre";
 import Admin from "./components/Admin";
 
 const App = () => {
@@ -40,18 +41,11 @@ const App = () => {
           <div className="col-md-10">
             <Switch>
               <Route path="/movies/:id" component={Movie} />
-              <Route path="/movies">
-                <Movies />
-              </Route>
-              <Route exact path="/genres">
-                <Genres />
-              </Route>
-              <Route path="/admin">
-                <Admin />
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
+              <Route path="/movies" component={Movies} />
+              <Route path="/genres/:id" component={OneGenre} />
+              <Route path="/genres" component={Genres} />
+              <Route path="/admin" component={Admin} />
+              <Route path="/" component={Home} />
             </Switch>
           </div>
         </div>
