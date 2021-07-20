@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import Genres from "./components/Genres";
 import OneGenre from "./components/OneGenre";
 import Admin from "./components/Admin";
+import EditMovie from "./components/EditMovie";
 
 const App = () => {
   return (
@@ -44,6 +45,7 @@ const App = () => {
               <Route path="/movies" component={Movies} />
               <Route path="/genres/:id" component={OneGenre} />
               <Route path="/genres" component={Genres} />
+              <Route path="/admin/add" component={EditMovie} />
               <Route path="/admin" component={Admin} />
               <Route path="/" component={Home} />
             </Switch>
