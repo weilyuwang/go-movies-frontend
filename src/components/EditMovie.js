@@ -28,11 +28,32 @@ const EditMovie = () => {
     });
   }, []);
 
+  const handleSubmit = (event) => {
+    console.log("Form was submitted");
+    event.preventDefault();
+  };
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    const name = event.target.name;
+    setMovie((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   return (
-    <>
+    <div className="container">
       <h2>Add/Edit Movie</h2>
       <hr />
-      <form method="post">
+      <form onSubmit={handleSubmit}>
+        <input
+          type="hidden"
+          name="id"
+          id="id"
+          value={movie.id}
+          onChange={handleChange}
+        />
         <div className="mb-3">
           <label className="form-label" htmlFor="title">
             Title
@@ -43,6 +64,7 @@ const EditMovie = () => {
             id="title"
             name="title"
             value={movie.title}
+            onChange={handleChange}
           />
         </div>
 
@@ -56,6 +78,7 @@ const EditMovie = () => {
             id="release_date"
             name="release_date"
             value={movie.release_date}
+            onChange={handleChange}
           />
         </div>
 
@@ -69,6 +92,7 @@ const EditMovie = () => {
             id="runtime"
             name="runtime"
             value={movie.runtime}
+            onChange={handleChange}
           />
         </div>
 
@@ -79,7 +103,9 @@ const EditMovie = () => {
           <select
             className="form-select"
             value={movie.mpaa_rating}
+            name="mpaa_rating"
             id="mpaa_rating"
+            onChange={handleChange}
           >
             <option className="form-select" value="G">
               G
@@ -106,6 +132,7 @@ const EditMovie = () => {
             id="rating"
             name="rating"
             value={movie.rating}
+            onChange={handleChange}
           />
         </div>
 
@@ -118,16 +145,20 @@ const EditMovie = () => {
             id="description"
             name="description"
             rows="3"
-          >
-            {movie.description}
-          </textarea>
+            onChange={handleChange}
+            value={movie.description}
+          />
         </div>
 
         <hr />
 
         <button className="btn btn-primary">Save</button>
       </form>
-    </>
+
+      <div className="mt-3">
+        <pre>{JSON.stringify({ movie, isLoaded, error }, null, 3)}</pre>
+      </div>
+    </div>
   );
 };
 
