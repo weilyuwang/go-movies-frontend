@@ -7,7 +7,8 @@ import "./EditMovie.css";
 const defaultMpaaOptions = [
   { id: "G", value: "G" },
   { id: "PG", value: "PG" },
-  { id: "PG14", value: "PG14" },
+  { id: "PG13", value: "PG13" },
+  { id: "R", value: "R" },
   { id: "NC17", value: "NC17" },
 ];
 
@@ -77,10 +78,11 @@ const EditMovie = () => {
           type="text"
           value={movie.release_date}
           handleChange={handleChange}
+          placeholder="yyyy-mm-dd"
         />
 
         <Input
-          label="Runtime Date"
+          label="Runtime"
           name="runtime"
           type="text"
           value={movie.runtime}
