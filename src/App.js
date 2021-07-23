@@ -33,6 +33,9 @@ const App = () => {
                   <Link to="/genres">Genres</Link>
                 </li>
                 <li className="list-group-item">
+                  <Link to="/admin/movie/0">Add Movie</Link>
+                </li>
+                <li className="list-group-item">
                   <Link to="/admin">Manage Catalogue</Link>
                 </li>
               </ul>
@@ -45,7 +48,7 @@ const App = () => {
               <Route path="/movies" component={Movies} />
               <Route path="/genres/:id" component={OneGenre} />
               <Route path="/genres" component={Genres} />
-              <Route path="/admin/add" component={EditMovie} />
+              <Route path="/admin/movie/:id" component={EditMovie} />
               <Route path="/admin" component={Admin} />
               <Route path="/" component={Home} />
             </Switch>
