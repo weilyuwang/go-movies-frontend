@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from "react";
+import Input from "./form-components/Input";
+import TextArea from "./form-components/TextArea";
+import Select from "./form-components/Select";
 import "./EditMovie.css";
+
+const defaultMpaaOptions = [
+  { id: "G", value: "G" },
+  { id: "PG", value: "PG" },
+  { id: "PG14", value: "PG14" },
+  { id: "NC17", value: "NC17" },
+];
 
 const EditMovie = () => {
   const [movie, setMovie] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
+  const [mpaaOptions, setMpaaOptions] = useState(defaultMpaaOptions);
 
   // const loadMovie = async (id) => {
   //   try {
@@ -22,10 +33,7 @@ const EditMovie = () => {
   // };
 
   useEffect(() => {
-    setMovie({
-      title: "The Godfather",
-      mpaa_rating: "R",
-    });
+    setMovie({});
   }, []);
 
   const handleSubmit = (event) => {
@@ -54,101 +62,55 @@ const EditMovie = () => {
           value={movie.id}
           onChange={handleChange}
         />
-        <div className="mb-3">
-          <label className="form-label" htmlFor="title">
-            Title
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="title"
-            name="title"
-            value={movie.title}
-            onChange={handleChange}
-          />
-        </div>
 
-        <div className="mb-3">
-          <label className="form-label" htmlFor="release_date">
-            Release Date
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="release_date"
-            name="release_date"
-            value={movie.release_date}
-            onChange={handleChange}
-          />
-        </div>
+        <Input
+          label="Title"
+          name="title"
+          type="text"
+          value={movie.title}
+          handleChange={handleChange}
+        />
 
-        <div className="mb-3">
-          <label className="form-label" htmlFor="runtime">
-            Runtime
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="runtime"
-            name="runtime"
-            value={movie.runtime}
-            onChange={handleChange}
-          />
-        </div>
+        <Input
+          label="Release Date"
+          name="release_date"
+          type="text"
+          value={movie.release_date}
+          handleChange={handleChange}
+        />
 
-        <div className="mb-3">
-          <label className="form-label" htmlFor="mpaa_rating">
-            MPAA Rating
-          </label>
-          <select
-            className="form-select"
-            value={movie.mpaa_rating}
-            name="mpaa_rating"
-            id="mpaa_rating"
-            onChange={handleChange}
-          >
-            <option className="form-select" value="G">
-              G
-            </option>
-            <option className="form-select" value="PG">
-              PG
-            </option>
-            <option className="form-select" value="PG14">
-              PG14
-            </option>
-            <option className="form-select" value="NC17">
-              NC17
-            </option>
-          </select>
-        </div>
+        <Input
+          label="Runtime Date"
+          name="runtime"
+          type="text"
+          value={movie.runtime}
+          handleChange={handleChange}
+        />
 
-        <div className="mb-3">
-          <label className="form-label" htmlFor="rating">
-            Rating
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="rating"
-            name="rating"
-            value={movie.rating}
-            onChange={handleChange}
-          />
-        </div>
+        <Select
+          name="mpaa_rating"
+          label="MPAA Rating"
+          value={movie.mpaa_rating}
+          handleChange={handleChange}
+          options={mpaaOptions}
+          placeholder="Choose..."
+        />
 
-        <div className="mb-3">
-          <label className="form-label" htmlFor="description">
-            Description
-          </label>
-          <textarea
-            className="form-control"
-            id="description"
-            name="description"
-            rows="3"
-            onChange={handleChange}
-            value={movie.description}
-          />
-        </div>
+        <Input
+          label="Rating"
+          name="rating"
+          type="text"
+          value={movie.rating}
+          handleChange={handleChange}
+        />
+
+        <TextArea
+          label="Description"
+          name="description"
+          value={movie.description}
+          rows="3"
+          handleChange={handleChange}
+        />
 
         <hr />
 
