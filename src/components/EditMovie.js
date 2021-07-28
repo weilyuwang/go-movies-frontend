@@ -20,6 +20,7 @@ const EditMovie = () => {
   const [movie, setMovie] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
+  const [errors, setErrors] = useState([]);
 
   const loadMovie = async (id) => {
     try {
@@ -60,6 +61,18 @@ const EditMovie = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Client side validation
+    let errors = [];
+    if (!movie.title) {
+      errors.push("title");
+    }
+    setErrors(errors);
+
+    if (errors.length > 0) {
+      console.log(errors);
+      return false;
+    }
+
     const data = new FormData(event.target);
     const payload = Object.fromEntries(data.entries());
 
@@ -94,6 +107,10 @@ const EditMovie = () => {
     }));
   };
 
+  const hasError = (key) => {
+    return errors.indexOf(key) !== -1;
+  };
+
   if (isLoaded) {
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -113,10 +130,13 @@ const EditMovie = () => {
 
             <Input
               label="Title"
+              className={hasError("title") ? "is-invalid" : ""}
               name="title"
               type="text"
               value={movie.title}
               handleChange={handleChange}
+              errorDiv={hasError("title") ? "text-danger" : "d-none"}
+              errorMessage={"Please enter a title"}
             />
 
             <Input
