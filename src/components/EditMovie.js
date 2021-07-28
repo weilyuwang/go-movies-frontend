@@ -57,9 +57,32 @@ const EditMovie = () => {
     }
   }, [id]);
 
-  const handleSubmit = (event) => {
-    console.log("Form was submitted");
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const data = new FormData(event.target);
+    const payload = Object.fromEntries(data.entries());
+
+    const requestOptions = {
+      method: "POST",
+      body: JSON.stringify(payload),
+    };
+
+    try {
+      const response = await fetch(
+        `http://localhost:4000/v1/admin/editmovie`,
+        requestOptions
+      );
+      if (response.status !== 200) {
+        throw Error("Invalid response code: " + response.status);
+      }
+      const data = await response.json();
+      console.log(data);
+      setIsLoaded(true);
+    } catch (err) {
+      setError(err);
+      setIsLoaded(true);
+    }
   };
 
   const handleChange = (event) => {
