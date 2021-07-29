@@ -142,7 +142,7 @@ const EditMovie = () => {
             <Input
               label="Release Date"
               name="release_date"
-              type="text"
+              type="date"
               value={movie.release_date}
               handleChange={handleChange}
               placeholder="yyyy-mm-dd"
