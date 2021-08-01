@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Input from "./form-components/Input";
 import TextArea from "./form-components/TextArea";
 import Select from "./form-components/Select";
+import Alert from "./ui-components/Alert";
 import "./EditMovie.css";
 
 const mpaaOptions = [
@@ -21,6 +22,8 @@ const EditMovie = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [errors, setErrors] = useState([]);
+  const [alertType, setAlertType] = useState("d-none");
+  const [alertMessage, setAlertMessage] = useState("");
 
   const loadMovie = async (id) => {
     try {
@@ -90,7 +93,13 @@ const EditMovie = () => {
         throw Error("Invalid response code: " + response.status);
       }
       const data = await response.json();
-      console.log(data);
+      if (data.error) {
+        setAlertType("alert-danger");
+        setAlertMessage(data.error.message);
+      } else {
+        setAlertType("alert-success");
+        setAlertMessage("Changes saved!");
+      }
       setIsLoaded(true);
     } catch (err) {
       setError(err);
@@ -118,6 +127,7 @@ const EditMovie = () => {
       return (
         <div className="container">
           <h2>Add/Edit Movie</h2>
+          <Alert alertType={alertType} alertMessage={alertMessage} />
           <hr />
           <form onSubmit={handleSubmit}>
             <input
@@ -185,10 +195,6 @@ const EditMovie = () => {
 
             <button className="btn btn-primary">Save</button>
           </form>
-
-          <div className="mt-3">
-            <pre>{JSON.stringify({ movie, isLoaded, error }, null, 3)}</pre>
-          </div>
         </div>
       );
     }
