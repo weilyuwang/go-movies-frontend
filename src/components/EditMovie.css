@@ -1,3 +1,7 @@
 label {
   font-weight: bold;
 }
+
+.react-confirm-alert {
+  margin-bottom: 15%;
+}
