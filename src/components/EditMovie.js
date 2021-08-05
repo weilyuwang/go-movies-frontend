@@ -99,13 +99,10 @@ const EditMovie = () => {
         setAlertType("alert-danger");
         setAlertMessage(data.error.message);
       } else {
-        setAlertType("alert-success");
-        setAlertMessage("Changes saved!");
+        history.push({ pathname: "/admin" });
       }
-      setIsLoaded(true);
     } catch (err) {
       setError(err);
-      setIsLoaded(true);
     }
   };
 

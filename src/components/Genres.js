@@ -32,6 +32,7 @@ const Genres = () => {
       return (
         <>
           <h2>Genres</h2>
+          <hr />
           <div className="list-group">
             {genres.map((g) => (
               <Link

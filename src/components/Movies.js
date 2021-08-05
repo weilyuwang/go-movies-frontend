@@ -25,29 +25,28 @@ const Movies = () => {
     loadMovies();
   }, []);
 
-  if (isLoaded) {
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else {
-      return (
-        <>
-          <h2>Choose a movie</h2>
-          <div className="list-group">
-            {movies.map((m) => (
-              <Link
-                key={m.id}
-                to={`/movies/${m.id}`}
-                className="list-group-item list-group-item-action"
-              >
-                {m.title}
-              </Link>
-            ))}
-          </div>
-        </>
-      );
-    }
-  } else {
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  } else if (!isLoaded) {
     return <div>Loading...</div>;
+  } else {
+    return (
+      <>
+        <h2>Choose A Movie</h2>
+        <hr />
+        <div className="list-group">
+          {movies.map((m) => (
+            <Link
+              key={m.id}
+              to={`/movies/${m.id}`}
+              className="list-group-item list-group-item-action"
+            >
+              {m.title}
+            </Link>
+          ))}
+        </div>
+      </>
+    );
   }
 };
 
