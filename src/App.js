@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 // HashRouter vs BrowserRouter:
 // https://stackoverflow.com/questions/51974369/what-is-the-difference-between-hashrouter-and-browserrouter-in-react
@@ -9,13 +9,41 @@ import Genres from "./components/Genres";
 import OneGenre from "./components/OneGenre";
 import Admin from "./components/Admin";
 import EditMovie from "./components/EditMovie";
+import Login from "./components/Login";
 
 const App = () => {
+  const [jwt, setJwt] = useState("");
+
+  const handleJWTChange = (jwt) => {
+    setJwt(jwt);
+  };
+
+  const logout = () => {
+    setJwt("");
+  };
+
+  const loginLink = () => {
+    let loginLink;
+    if (jwt === "") {
+      loginLink = <Link to="/login">Login</Link>;
+    } else {
+      loginLink = (
+        <Link to="/logout" onClick={logout}>
+          Logout
+        </Link>
+      );
+    }
+    return loginLink;
+  };
+
   return (
     <Router>
       <div className="container">
         <div className="row">
-          <h1 className="mt-3">Go Watch a Movie!</h1>
+          <div className="col mt-3">
+            <h1 className="mt-3">Go Watch a Movie!</h1>
+          </div>
+          <div className="col mt-3 text-end">{loginLink()}</div>
           <hr className="mb-3"></hr>
         </div>
 
@@ -32,12 +60,16 @@ const App = () => {
                 <li className="list-group-item">
                   <Link to="/genres">Genres</Link>
                 </li>
-                <li className="list-group-item">
-                  <Link to="/admin/movie/0">Add Movie</Link>
-                </li>
-                <li className="list-group-item">
-                  <Link to="/admin">Manage Catalogue</Link>
-                </li>
+                {jwt !== "" && (
+                  <>
+                    <li className="list-group-item">
+                      <Link to="/admin/movie/0">Add Movie</Link>
+                    </li>
+                    <li className="list-group-item">
+                      <Link to="/admin">Manage Catalogue</Link>
+                    </li>
+                  </>
+                )}
               </ul>
             </nav>
           </div>
@@ -48,6 +80,13 @@ const App = () => {
               <Route path="/movies" component={Movies} />
               <Route path="/genres/:id" component={OneGenre} />
               <Route path="/genres" component={Genres} />
+              <Route
+                path="/login"
+                exact
+                component={(props) => (
+                  <Login {...props} handleJWTChange={handleJWTChange} />
+                )}
+              />
               <Route path="/admin/movie/:id" component={EditMovie} />
               <Route path="/admin" component={Admin} />
               <Route path="/" component={Home} />
