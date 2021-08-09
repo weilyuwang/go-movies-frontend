@@ -71,7 +71,6 @@ const App = () => {
                   </>
                 )}
               </ul>
-              <pre>jwt: {jwt}</pre>
             </nav>
           </div>
 
@@ -88,8 +87,14 @@ const App = () => {
                   <Login {...props} handleJWTChange={handleJWTChange} />
                 )}
               />
-              <Route path="/admin/movie/:id" component={EditMovie} />
-              <Route path="/admin" component={Admin} />
+              <Route
+                path="/admin/movie/:id"
+                component={(props) => <EditMovie {...props} jwt={jwt} />}
+              />
+              <Route
+                path="/admin"
+                component={(props) => <Admin {...props} jwt={jwt} />}
+              />
               <Route path="/" component={Home} />
             </Switch>
           </div>

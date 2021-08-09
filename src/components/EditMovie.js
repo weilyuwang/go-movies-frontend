@@ -16,7 +16,7 @@ const mpaaOptions = [
   { id: "NC17", value: "NC17" },
 ];
 
-const EditMovie = () => {
+const EditMovie = ({ jwt }) => {
   const { id } = useParams();
   const history = useHistory();
 
@@ -80,9 +80,13 @@ const EditMovie = () => {
 
     const data = new FormData(event.target);
     const payload = Object.fromEntries(data.entries());
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${jwt}`);
 
     const requestOptions = {
       method: "POST",
+      headers: myHeaders,
       body: JSON.stringify(payload),
     };
 
