@@ -19,8 +19,46 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let errs = [];
+    if (email === "") {
+      errs.push("email");
+    }
+    if (password === "") {
+      errs.push("password");
+    }
+    setErrors(errs);
+    if (errors.length > 0) {
+      return false;
+    }
+
+    const data = new FormData(e.target);
+    const payload = Object.fromEntries(data.entries());
+
+    const requestOptions = {
+      method: "POST",
+      body: JSON.stringify(payload),
+    };
+
+    try {
+      const response = await fetch(
+        `http://localhost:4000/v1/signin`,
+        requestOptions
+      );
+
+      const data = await response.json();
+      if (data.error) {
+        console.log(data.error.message);
+        setAlertType("alert-danger");
+        setAlertMessage(data.error.message);
+      } else {
+        console.log(data);
+      }
+    } catch (err) {
+      setError(err);
+    }
   };
 
   const hasError = (key) => {

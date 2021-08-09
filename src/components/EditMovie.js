@@ -91,9 +91,6 @@ const EditMovie = () => {
         `http://localhost:4000/v1/admin/editmovie`,
         requestOptions
       );
-      if (response.status !== 200) {
-        throw Error("Invalid response code: " + response.status);
-      }
       const data = await response.json();
       if (data.error) {
         setAlertType("alert-danger");
