@@ -1,15 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Input from "./form-components/Input";
 import Alert from "./ui-components/Alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
-const Login = ({ handleJWTChange, history }) => {
+const Login = ({ handleJWTChange, history, jwt }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [errors, setErrors] = useState([]);
   const [alertType, setAlertType] = useState("d-none");
   const [alertMessage, setAlertMessage] = useState("");
+
+  useEffect(() => {
+    if (jwt !== "") {
+      history.push("/admin");
+      return;
+    }
+  }, [history, jwt]);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -55,6 +62,8 @@ const Login = ({ handleJWTChange, history }) => {
         setAlertMessage(data.error.message);
       } else {
         handleJWTChange(data.response);
+        // save JWT to local storage
+        window.localStorage.setItem("jwt", JSON.stringify(data.response));
         history.push({ pathname: "/admin" });
       }
     } catch (err) {

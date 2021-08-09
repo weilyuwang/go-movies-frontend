@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 // HashRouter vs BrowserRouter:
 // https://stackoverflow.com/questions/51974369/what-is-the-difference-between-hashrouter-and-browserrouter-in-react
@@ -14,12 +14,22 @@ import Login from "./components/Login";
 const App = () => {
   const [jwt, setJwt] = useState("");
 
+  useEffect(() => {
+    const t = window.localStorage.getItem("jwt");
+    if (t) {
+      if (jwt === "") {
+        setJwt(JSON.parse(t));
+      }
+    }
+  }, [jwt]);
+
   const handleJWTChange = (jwt) => {
     setJwt(jwt);
   };
 
   const logout = () => {
     setJwt("");
+    window.localStorage.removeItem("jwt");
   };
 
   const loginLink = () => {
@@ -84,7 +94,11 @@ const App = () => {
                 path="/login"
                 exact
                 component={(props) => (
-                  <Login {...props} handleJWTChange={handleJWTChange} />
+                  <Login
+                    {...props}
+                    handleJWTChange={handleJWTChange}
+                    jwt={jwt}
+                  />
                 )}
               />
               <Route
