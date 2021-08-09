@@ -47,6 +47,11 @@ const EditMovie = ({ jwt }) => {
   };
 
   useEffect(() => {
+    if (jwt === "") {
+      // redirect to login page if user is not logged in
+      history.push("/login");
+      return;
+    }
     if (id > 0) {
       loadMovie(id);
     } else {
@@ -61,7 +66,7 @@ const EditMovie = ({ jwt }) => {
       });
       setIsLoaded(true);
     }
-  }, [id]);
+  }, [history, id, jwt]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -74,7 +79,6 @@ const EditMovie = ({ jwt }) => {
     setErrors(errors);
 
     if (errors.length > 0) {
-      console.log(errors);
       return false;
     }
 

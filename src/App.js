@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 // HashRouter vs BrowserRouter:
 // https://stackoverflow.com/questions/51974369/what-is-the-difference-between-hashrouter-and-browserrouter-in-react

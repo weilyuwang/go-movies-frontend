@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Input from "./form-components/Input";
 import Alert from "./ui-components/Alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -66,7 +66,9 @@ const Login = ({ handleJWTChange, history }) => {
     return errors.indexOf(key) !== -1;
   };
 
-  return (
+  return error ? (
+    <div>Error: {error.message}</div>
+  ) : (
     <>
       <h2>Login</h2>
       <Alert alertMessage={alertMessage} alertType={alertType} />
