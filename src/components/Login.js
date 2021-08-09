@@ -3,7 +3,7 @@ import Input from "./form-components/Input";
 import Alert from "./ui-components/Alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
-const Login = () => {
+const Login = ({ handleJWTChange, history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -54,7 +54,8 @@ const Login = () => {
         setAlertType("alert-danger");
         setAlertMessage(data.error.message);
       } else {
-        console.log(data);
+        handleJWTChange(data.response);
+        history.push({ pathname: "/admin" });
       }
     } catch (err) {
       setError(err);

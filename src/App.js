@@ -71,6 +71,7 @@ const App = () => {
                   </>
                 )}
               </ul>
+              <pre>jwt: {jwt}</pre>
             </nav>
           </div>
 
