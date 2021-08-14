@@ -15,6 +15,7 @@ const GraphQL = () => {
   const [errors, setErrors] = useState([]);
   const [alertType, setAlertType] = useState("d-none");
   const [alertMessage, setAlertMessage] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const loadMovie = async (id) => {
     const payload = `
@@ -39,7 +40,7 @@ const GraphQL = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:4000/v1/graphql/list`,
+        `http://localhost:4000/v1/graphql`,
         requestOptions
       );
       const data = await response.json();
@@ -55,6 +56,48 @@ const GraphQL = () => {
   useEffect(() => {
     loadMovie();
   }, []);
+
+  const handleSearchTermChange = (e) => {
+    setSearchTerm(e.target.value);
+    performSearch();
+  };
+
+  const performSearch = async () => {
+    const payload = `
+    {
+      search(titleContains: "${searchTerm}") {
+        id
+        title
+        runtime
+        year
+        description
+      }
+    }
+    `;
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const requestOptions = {
+      method: "POST",
+      body: payload,
+      headers: myHeaders,
+    };
+
+    try {
+      const response = await fetch(
+        `http://localhost:4000/v1/graphql`,
+        requestOptions
+      );
+      const data = await response.json();
+      console.log(data);
+      const movies = data.data.search;
+      setMovies(movies);
+      setIsLoaded(true);
+    } catch (err) {
+      setError(err);
+      setIsLoaded(true);
+    }
+  };
 
   // useEffect(() => {
   //   if (jwt === "") {
@@ -124,6 +167,15 @@ const GraphQL = () => {
     <>
       <h2>GraphQL</h2>
       <hr />
+
+      <Input
+        title={"Search"}
+        type={"text"}
+        name={"search"}
+        value={searchTerm}
+        handleChange={handleSearchTermChange}
+      />
+
       <div className="list-group">
         {movies.map((m) => (
           <a
