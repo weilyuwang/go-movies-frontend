@@ -10,6 +10,7 @@ import OneGenre from "./components/OneGenre";
 import Admin from "./components/Admin";
 import EditMovie from "./components/EditMovie";
 import Login from "./components/Login";
+import GraphQL from "./components/GraphQL";
 
 const App = () => {
   const [jwt, setJwt] = useState("");
@@ -80,6 +81,9 @@ const App = () => {
                     </li>
                   </>
                 )}
+                <li className="list-group-item">
+                  <Link to="/graphql">GraphQL</Link>
+                </li>
               </ul>
             </nav>
           </div>
@@ -90,6 +94,7 @@ const App = () => {
               <Route path="/movies" component={Movies} />
               <Route path="/genres/:id" component={OneGenre} />
               <Route path="/genres" component={Genres} />
+              <Route path="/graphql" exact component={GraphQL} />
               <Route
                 path="/login"
                 exact
