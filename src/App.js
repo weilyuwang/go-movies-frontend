@@ -11,6 +11,7 @@ import Admin from "./components/Admin";
 import EditMovie from "./components/EditMovie";
 import Login from "./components/Login";
 import GraphQL from "./components/GraphQL";
+import OneMovieGraphQL from "./components/OneMovieGraphQL";
 
 const App = () => {
   const [jwt, setJwt] = useState("");
@@ -91,6 +92,7 @@ const App = () => {
           <div className="col-md-10">
             <Switch>
               <Route path="/movies/:id" component={Movie} />
+              <Route path="/moviesgraphql/:id" component={OneMovieGraphQL} />
               <Route path="/movies" component={Movies} />
               <Route path="/genres/:id" component={OneGenre} />
               <Route path="/genres" component={Genres} />

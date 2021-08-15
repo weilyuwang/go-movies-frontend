@@ -114,10 +114,10 @@ const GraphQL = () => {
 
       <div className="list-group">
         {movies.map((m) => (
-          <a
+          <Link
             key={m.id}
             className="list-group-item list-group-item-action"
-            href="#!"
+            to={`/moviesgraphql/${m.id}`}
           >
             <strong>{m.title}</strong>
             <br />
@@ -126,7 +126,7 @@ const GraphQL = () => {
             </small>
             <br />
             {m.description.slice(0, 100)}...
-          </a>
+          </Link>
         ))}
       </div>
     </>
