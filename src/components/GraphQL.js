@@ -7,12 +7,9 @@ const GraphQL = () => {
   const [movies, setMovies] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
-  const [errors, setErrors] = useState([]);
-  const [alertType, setAlertType] = useState("d-none");
-  const [alertMessage, setAlertMessage] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const loadMovie = async (id) => {
+  const loadMovies = async () => {
     const payload = `
     {
       list {
@@ -49,7 +46,7 @@ const GraphQL = () => {
   };
 
   useEffect(() => {
-    loadMovie();
+    loadMovies();
   }, []);
 
   const handleSearchTermChange = (e) => {
@@ -84,7 +81,6 @@ const GraphQL = () => {
         requestOptions
       );
       const data = await response.json();
-      console.log(data);
       const movies = data.data.search;
       setMovies(movies);
       setIsLoaded(true);
@@ -94,38 +90,44 @@ const GraphQL = () => {
     }
   };
 
-  return (
-    <>
-      <h2>GraphQL</h2>
-      <hr />
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  } else if (!isLoaded) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <>
+        <h2>GraphQL</h2>
+        <hr />
 
-      <Input
-        title={"Search"}
-        type={"text"}
-        name={"search"}
-        value={searchTerm}
-        handleChange={handleSearchTermChange}
-      />
+        <Input
+          title={"Search"}
+          type={"text"}
+          name={"search"}
+          value={searchTerm}
+          handleChange={handleSearchTermChange}
+        />
 
-      <div className="list-group">
-        {movies.map((m) => (
-          <Link
-            key={m.id}
-            className="list-group-item list-group-item-action"
-            to={`/moviesgraphql/${m.id}`}
-          >
-            <strong>{m.title}</strong>
-            <br />
-            <small className="text-muted">
-              ({m.year} - {m.runtime} minutes)
-            </small>
-            <br />
-            {m.description.slice(0, 100)}...
-          </Link>
-        ))}
-      </div>
-    </>
-  );
+        <div className="list-group">
+          {movies.map((m) => (
+            <Link
+              key={m.id}
+              className="list-group-item list-group-item-action"
+              to={`/moviesgraphql/${m.id}`}
+            >
+              <strong>{m.title}</strong>
+              <br />
+              <small className="text-muted">
+                ({m.year} - {m.runtime} minutes)
+              </small>
+              <br />
+              {m.description.slice(0, 100)}...
+            </Link>
+          ))}
+        </div>
+      </>
+    );
+  }
 };
 
 export default GraphQL;
