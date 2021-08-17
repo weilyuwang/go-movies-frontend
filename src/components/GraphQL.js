@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Input from "./form-components/Input";
-import TextArea from "./form-components/TextArea";
-import Select from "./form-components/Select";
-import Alert from "./ui-components/Alert";
 import "./EditMovie.css";
-import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css";
 
 const GraphQL = () => {
   const [movies, setMovies] = useState([]);
