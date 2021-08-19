@@ -29,7 +29,9 @@ const EditMovie = ({ jwt }) => {
 
   const loadMovie = async (id) => {
     try {
-      const response = await fetch(`http://localhost:4000/v1/movie/${id}`);
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/v1/movie/${id}`
+      );
       if (response.status !== 200) {
         throw Error("Invalid response code: " + response.status);
       }
@@ -96,7 +98,7 @@ const EditMovie = ({ jwt }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:4000/v1/admin/editmovie`,
+        `${process.env.REACT_APP_API_URL}/v1/admin/editmovie`,
         requestOptions
       );
       const data = await response.json();
@@ -127,7 +129,7 @@ const EditMovie = ({ jwt }) => {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        "http://localhost:4000/v1/admin/deletemovie/" + movie.id,
+        `${process.env.REACT_APP_API_URL}/v1/admin/deletemovie/` + movie.id,
         {
           method: "GET",
         }

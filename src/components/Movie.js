@@ -9,7 +9,9 @@ const Movie = () => {
 
   const loadMovie = async (id) => {
     try {
-      const response = await fetch(`http://localhost:4000/v1/movie/${id}`);
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/v1/movie/${id}`
+      );
       if (response.status !== 200) {
         throw Error("Invalid response code: " + response.status);
       }

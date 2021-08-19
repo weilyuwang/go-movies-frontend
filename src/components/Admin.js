@@ -8,7 +8,9 @@ const Admin = ({ jwt, history }) => {
 
   const loadMovies = async () => {
     try {
-      const response = await fetch("http://localhost:4000/v1/movies");
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/v1/movies`
+      );
       if (response.status !== 200) {
         throw Error("Invalid response code: " + response.status);
       }
